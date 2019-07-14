@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:title="@string/menu_nav_inicio"
+            android:icon="@drawable/ic_inicio"
+            android:id="@+id/menu_inicio"/>
+        <item android:title="@string/menu_nav_sermoes"
+            android:icon="@drawable/ic_sermao"
+            android:id="@+id/menu_sermoes"/>
+        <item android:title="@string/menu_nav_aulas"
+            android:icon="@drawable/ic_aulas"
+            android:id="@+id/menu_aulas"/>
+        <item android:title="@string/menu_nav_espiritualidade"
+            android:icon="@drawable/ic_espiritualidade"
+            android:id="@+id/menu_espiritualidade_formacao"/>
+        <item android:title="@string/menu_nav_liturgia"
+            android:icon="@drawable/ic_liturgia"
+            android:id="@+id/menu_liturgia"/>
+        <item android:title="@string/menu_nav_midia"
+            android:icon="@drawable/ic_midia"
+            android:id="@+id/menu_midia"/>
+        <item android:title="@string/menu_nav_ibp_pelo_mundo"
+            android:icon="@drawable/ic_ibp"
+            android:id="@+id/menu_ibp"/>
+        <item android:title="@string/menu_nav_informacao"
+            android:icon="@drawable/ic_informacao"
+            android:id="@+id/menu_informacao"/>
+    </group>
+    <item android:title="@string/menu_nav_outros"
+        android:id="@+id/submenu_outros">
+        <menu>
+            <item android:title="@string/menu_nav_ajude_nos"
+                android:icon="@drawable/ic_ajuda"
+                android:id="@+id/menu_ajude"/>
+            <item android:title="@string/menu_nav_contato"
+                android:icon="@drawable/ic_contato"
+                android:id="@+id/menu_contato"/>
+            <item android:title="Compartilhar"
+                android:icon="@drawable/ic_compartilhar"
+                android:id="@+id/menu_compartilhar"/>
+        </menu>
+    </item>
+
+</menu>

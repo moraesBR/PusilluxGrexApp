@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Pusillux Grex</string>
+    <string name="nav_header_title">Pusillus Grex</string>
+    <string name="nav_header_subtitle">Instituto Bom Pastor (IBP-PA)</string>
+    <string name="menu_nav_inicio">Início</string>
+    <string name="menu_nav_sermoes">Sermões</string>
+    <string name="menu_nav_aulas">Aulas</string>
+    <string name="menu_nav_espiritualidade">Espiritualidade</string>
+    <string name="menu_nav_liturgia">Liturgia</string>
+    <string name="menu_nav_midia">Mídia</string>
+    <string name="menu_nav_ibp_pelo_mundo">IBP pelo mundo</string>
+    <string name="menu_nav_ajude_nos">Ajude-nos</string>
+    <string name="menu_nav_contato">Contato</string>
+    <string name="menu_nav_outros">Outros</string>
+    <string name="menu_nav_lixeira">Lixeira</string>
+    <string name="menu_nav_informacao">Sobre</string>
+    <string name="open_drawer">Abrir</string>
+    <string name="close_drawer">Fechar</string>
+</resources>

@@ -8,10 +8,24 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+
+import org.pusillusgrex.pusilluxgrexapp.models.Publicacao;
+import org.pusillusgrex.pusilluxgrexapp.models.Tag;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -33,7 +47,115 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView = findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        TextView textView = findViewById(R.id.textview);
+
+        XmlPullParserFactory pullParserFactory;
+
+        try {
+            pullParserFactory = XmlPullParserFactory.newInstance();
+            XmlPullParser parser = pullParserFactory.newPullParser();
+
+            InputStream in_s = getApplicationContext().getAssets().open("pusillusgrex.xml");
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            parser.setInput(in_s, null);
+
+            ArrayList<Publicacao> publicacaos =  parseXML(parser);
+
+            String text="";
+
+            for(Publicacao publicacao:publicacaos)
+            {
+
+                text+= publicacao.toString();
+            }
+
+            textView.setText(text);
+
+
+
+        } catch (XmlPullParserException e) {
+
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
+
+    private ArrayList<Publicacao> parseXML(XmlPullParser parser) throws XmlPullParserException,IOException
+    {
+        ArrayList<Publicacao> publicacoes = null;
+        ArrayList<Tag> categorias = null;
+        int eventType = parser.getEventType();
+        Publicacao publicacao = null;
+
+        while (eventType != XmlPullParser.END_DOCUMENT){
+            String nomeTag;
+            switch (eventType){
+                case XmlPullParser.START_DOCUMENT: {
+                    publicacoes = new ArrayList<>();
+                    break;
+                }
+                case XmlPullParser.START_TAG:{
+                    nomeTag = parser.getName();
+                    if(nomeTag.equalsIgnoreCase("publicacao")){
+                        publicacao = new Publicacao();
+                    }
+                    else if(publicacao != null){
+                        switch (nomeTag.toLowerCase()){
+                            case "titulo": {
+                                publicacao.setTitulo(parser.nextText());
+                                break;
+                            }
+                            case "data": {
+                                publicacao.setData(LocalDate.parse(parser.nextText()));
+                                //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+                                //publicacao.setData(LocalDate.parse(parser.nextText()));
+                                break;
+                            }
+                            case "categorias": {
+                                categorias = new ArrayList<>();
+                                break;
+                            }
+                            case "categoria": {
+                                categorias.add(Tag.valueOf(parser.nextText().toUpperCase()));
+                                break;
+                            }
+                            case "midia": {
+                                publicacao.setUrlMidia(parser.nextText());
+                                break;
+                            }
+                            case "imagem": {
+                                publicacao.setUrlImagem(parser.nextText());
+                                break;
+                            }
+                            case "descricao": {
+                                publicacao.setDescricao(parser.nextText());
+                                break;
+                            }
+                            case "texto": {
+                                publicacao.setTexto(parser.nextText());
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
+                case XmlPullParser.END_DOCUMENT:{
+                    nomeTag = parser.getName();
+                    if(nomeTag.equalsIgnoreCase("publicacao") && publicacao != null){
+                        publicacoes.add(publicacao);
+                    }
+                }
+            }
+            eventType = parser.next();
+        }
+        return publicacoes;
+    }
+
+
 
     @Override
     public void onBackPressed(){
